@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # start with discovery (MDPWS) that is running on the named adapter "Ethernet" (replace as you need it on your machine, e.g. "enet0" or "Ethernet")
     basic_logging_setup(level=logging.INFO)
 
-    my_discovery = WSDiscoverySingleAdapter("Loopback Pseudo-Interface 1")
+    my_discovery = WSDiscoverySingleAdapter("wlp1s0") # one of ['lo', 'wlp1s0', 'docker0', 'br-e847715e238d']
     # start the discovery
     my_discovery.start()
     # create a local mdib that will be sent out on the network, the mdib is based on a XML file
