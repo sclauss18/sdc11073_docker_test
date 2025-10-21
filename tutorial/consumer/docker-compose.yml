@@ -1,0 +1,15 @@
+
+services:
+
+  consumer:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: consumer
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+
+networks:
+  backend:
+    driver: bridge
