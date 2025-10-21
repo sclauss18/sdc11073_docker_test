@@ -1,3 +1,4 @@
+import os
 import logging
 import time
 import uuid
@@ -10,6 +11,8 @@ from sdc11073.consumer import SdcConsumer
 from sdc11073.mdib import ConsumerMdib
 from sdc11073 import observableproperties
 from sdc11073.loghelper import basic_logging_setup
+
+logger = logging.getLogger('sdc.consumer')
 # This example shows how to implement a very simple SDC Consumer (client)
 # It will scan for SDC Providers and connect to on well known UUID
 
@@ -22,6 +25,7 @@ device_A_UUID = uuid.uuid5(baseUUID, "12345")
 def on_metric_update(metrics_by_handle: dict):
     # we get all changed handles as parameter, iterate over them and output
     print(f"Got update on: {list(metrics_by_handle.keys())}")
+    logger.info(f"Got update on: {list(metrics_by_handle.keys())}")
 
 def set_ensemble_context(mdib: ConsumerMdib, sdc_consumer: SdcConsumer) -> None:
     # calling operation on remote device 
@@ -59,7 +63,10 @@ if __name__ == '__main__':
     # start with discovery (MDPWS) that is running on the named adapter "Ethernet" (replace as you need it on your machine, e.g. "enet0" or "Ethernet)
     basic_logging_setup(level=logging.INFO)
     # my_discovery = WSDiscovery("127.0.0.1")
-    my_discovery = WSDiscoverySingleAdapter("wlp1s0")
+    # adapter = "wlp1s0" # "wlp1s0"
+    adapter = os.getenv("DISCOVERY_ADAPTER", "ERROR")
+    logger.info(f"using adapter {adapter} for Discovery")
+    my_discovery = WSDiscoverySingleAdapter(adapter)
     # start the discovery
     my_discovery.start()
     # we want to search until we found one device with this client

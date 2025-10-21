@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: consumer
+    environment:
+      - DISCOVERY_ADAPTER=wlp1s0
     network_mode: host
     cap_add:
       - NET_ADMIN
