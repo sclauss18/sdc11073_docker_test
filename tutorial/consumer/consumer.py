@@ -4,7 +4,7 @@ import uuid
 from sdc11073.xml_types import pm_types, msg_types
 from sdc11073.xml_types import pm_qnames as pm
 from sdc11073.xml_types.actions import periodic_actions
-from sdc11073.wsdiscovery import WSDiscovery
+from sdc11073.wsdiscovery import WSDiscovery, WSDiscoverySingleAdapter
 from sdc11073.definitions_sdc import SdcV1Definitions
 from sdc11073.consumer import SdcConsumer
 from sdc11073.mdib import ConsumerMdib
@@ -58,7 +58,8 @@ def set_ensemble_context(mdib: ConsumerMdib, sdc_consumer: SdcConsumer) -> None:
 if __name__ == '__main__':
     # start with discovery (MDPWS) that is running on the named adapter "Ethernet" (replace as you need it on your machine, e.g. "enet0" or "Ethernet)
     basic_logging_setup(level=logging.INFO)
-    my_discovery = WSDiscovery("127.0.0.1")
+    # my_discovery = WSDiscovery("127.0.0.1")
+    my_discovery = WSDiscoverySingleAdapter("wlp1s0")
     # start the discovery
     my_discovery.start()
     # we want to search until we found one device with this client
